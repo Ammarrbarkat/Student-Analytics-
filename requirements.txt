@@ -5,3 +5,4 @@ pymongo
 scipy
 numpy
 dnspython
+statsmodels
