@@ -8,8 +8,8 @@ from datetime import datetime
 
 
 st.set_page_config(
-    page_title="Student Analytics Dashboard",
-    page_icon="📊",
+    page_title="Kayfa Analytics Dashboard",
+    page_icon="logo.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
