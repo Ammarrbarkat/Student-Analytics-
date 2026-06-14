@@ -50,7 +50,7 @@ with st.sidebar:
     st.image("logo.png", width=200)
     
     # Title under logo
-    st.markdown("### 🎓 Kayfa Analytics")
+    st.markdown("### 🎓  Student Analytics")
     st.caption("Student Performance Dashboard")
     
     st.markdown("---")
