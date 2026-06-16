@@ -217,14 +217,10 @@ concept_trend      = load_collection("concept_trend")
 late_vs_score      = load_collection("late_vs_score")
 monthly_engagement = load_collection("monthly_engagement")
 
-# ============================================================
-# Sidebar
-# ============================================================
 with st.sidebar:
     # ===== HDR + NEON GLOW LOGO (Professional) =====
     st.markdown("""
     <style>
-    /* ===== HDR + NEON GLOW LOGO (Professional) ===== */
     @keyframes hdrNeonPulse {
         0% {
             filter: brightness(1) saturate(1.1)
@@ -269,7 +265,6 @@ with st.sidebar:
         overflow: hidden;
     }
 
-    /* Background light effect - زي الـ HDR backlight */
     .logo-professional::before {
         content: '';
         position: absolute;
@@ -294,7 +289,6 @@ with st.sidebar:
         z-index: 2;
     }
 
-    /* Hover Effect - زود النور أكتر */
     .logo-professional img:hover {
         animation: none;
         filter: brightness(1.3) saturate(1.8)
@@ -305,7 +299,6 @@ with st.sidebar:
         transform: scale(1.06) translateY(-2px);
     }
 
-    /* Title under logo with glow */
     .logo-title {
         text-align: center;
         margin-top: 4px;
@@ -336,6 +329,36 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("## 📊 Navigation")
+
+    questions = {
+        "Q1": "📈 Attendance Rate per Group",
+        "Q2": "📊 Score Distribution by Assessment Type",
+        "Q3": "🏆 Course Performance",
+        "Q4": "📉 Attendance vs Grade Correlation",
+        "Q5": "💻 Engagement vs Performance",
+        "Q6": "❌ Concept Failure Rates",
+        "Q7": "📈 Weakest Concept Trend",
+        "Q8": "⏰ Late Submissions vs Score",
+        "Q9": "📅 Monthly Attendance & Engagement",
+        "Q10": "👥 Age Band Analysis",
+        "Q11": "🎯 Student Segmentation",
+        "Q12": "📏 Group Sizes: Stated vs Actual",
+        "Q13": "🔍 Smallest Group Recommendation",
+        "Q14": "🚨 Top 10 At-Risk Students",
+        "Q15": "📈 Group Grade Trends Over Time"
+    }
+
+    selected_q = st.radio(
+        "Select a question:",
+        options=list(questions.keys()),
+        format_func=lambda x: f"{x} - {questions[x]}",
+        label_visibility="collapsed",
+        index=0  # <--- IMPORTANT: Fixes the NameError
+    )
+
+    st.markdown("---")
+    st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    st.caption("© 2026 Kayfa Analytics")
 
 # ============================================================
 # Main Content
