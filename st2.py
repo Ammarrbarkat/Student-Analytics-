@@ -340,6 +340,7 @@ elif selected_q == "Q2":
     st.header("📊 Q2: Score Distribution by Assessment Type")
 
     if not score_by_type.empty:
+
         fig = px.bar(
             score_by_type,
             x='type',
@@ -348,22 +349,36 @@ elif selected_q == "Q2":
             color='mean',
             color_continuous_scale='Teal',
             title='Average Score (%) by Assessment Type',
-            labels={'type': 'Assessment Type', 'mean': 'Average Score (%)', 'count': 'Count'},
+            labels={
+                'type': 'Assessment Type',
+                'mean': 'Average Score (%)',
+                'count': 'Count'
+            },
             text='mean',
             hover_data=['std', 'count']
         )
-        fig.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
+
+        fig.update_traces(
+            texttemplate='%{text:.1f}%',
+            textposition='outside'
+        )
+
         style_chart(fig)
+
         st.plotly_chart(fig, use_container_width=True)
 
         st.dataframe(
-            score_by_type.rename(columns={'type': 'Type', 'mean': 'Avg Score (%)', 'std': 'Std Dev', 'count': 'Count'}),
+            score_by_type.rename(columns={
+                'type': 'Type',
+                'mean': 'Avg Score (%)',
+                'std': 'Std Dev',
+                'count': 'Count'
+            }),
             use_container_width=True
         )
+
     else:
         st.warning("⚠️ score_by_type collection is empty. Run test.py first.")
-
-
 # Q3: Course Performance
 elif selected_q == "Q3":
     st.header("🏆 Q3: Highest and Lowest Average Grade by Course")
