@@ -353,7 +353,7 @@ elif selected_q == "Q2":
             hover_data=['std', 'count']
         )
         fig.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
-        fig.update_layout(height=500)
+        style_chart(fig)
         st.plotly_chart(fig, use_container_width=True)
 
         st.dataframe(
