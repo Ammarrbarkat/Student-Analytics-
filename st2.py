@@ -147,7 +147,7 @@ elif selected_q == "Q3":
     
     if not course_grades.empty:
         fig = px.bar(
-            course_grades, x='course_name', y='mean'
+            course_grades, x='course_name', y='mean',
             title='Average Grade per Course (with standard deviation)',
             labels={'mean': 'Average Grade (%)', 'course_name': 'Course'},
             color='mean',
