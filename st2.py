@@ -217,119 +217,144 @@ concept_trend      = load_collection("concept_trend")
 late_vs_score      = load_collection("late_vs_score")
 monthly_engagement = load_collection("monthly_engagement")
 
+import base64
+import os
+
+def get_base64_image(image_path):
+    try:
+        with open(image_path, "rb") as f:
+            data = base64.b64encode(f.read()).decode("utf-8")
+        return data
+    except FileNotFoundError:
+        # لو الصورة مش موجودة، استخدم placeholder
+        return None
+
+# في الـ Sidebar
 with st.sidebar:
-    # ===== HDR + NEON GLOW LOGO (Professional) =====
-    st.markdown("""
-    <style>
-    @keyframes hdrNeonPulse {
-        0% {
-            filter: brightness(1) saturate(1.1)
-                    drop-shadow(0 0 10px rgba(168, 85, 247, 0.3))
-                    drop-shadow(0 0 20px rgba(168, 85, 247, 0.1));
-        }
-        30% {
-            filter: brightness(1.15) saturate(1.5)
-                    drop-shadow(0 0 25px rgba(168, 85, 247, 0.7))
-                    drop-shadow(0 0 50px rgba(168, 85, 247, 0.4))
-                    drop-shadow(0 0 80px rgba(168, 85, 247, 0.2));
-        }
-        70% {
-            filter: brightness(1.1) saturate(1.4)
-                    drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))
-                    drop-shadow(0 0 40px rgba(168, 85, 247, 0.3));
-        }
-        100% {
-            filter: brightness(1) saturate(1.1)
-                    drop-shadow(0 0 10px rgba(168, 85, 247, 0.3))
-                    drop-shadow(0 0 20px rgba(168, 85, 247, 0.1));
-        }
-    }
+    # جيب الصورة
+    logo_base64 = get_base64_image("logo.png")  # غير لـ image.png لو اسم الملف مختلف
+    
+    if logo_base64:
+        st.markdown(f"""
+        <style>
+        @keyframes hdrNeonPulse {{
+            0% {{
+                filter: brightness(1) saturate(1.1)
+                        drop-shadow(0 0 10px rgba(168, 85, 247, 0.3))
+                        drop-shadow(0 0 20px rgba(168, 85, 247, 0.1));
+            }}
+            30% {{
+                filter: brightness(1.15) saturate(1.5)
+                        drop-shadow(0 0 25px rgba(168, 85, 247, 0.7))
+                        drop-shadow(0 0 50px rgba(168, 85, 247, 0.4))
+                        drop-shadow(0 0 80px rgba(168, 85, 247, 0.2));
+            }}
+            70% {{
+                filter: brightness(1.1) saturate(1.4)
+                        drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))
+                        drop-shadow(0 0 40px rgba(168, 85, 247, 0.3));
+            }}
+            100% {{
+                filter: brightness(1) saturate(1.1)
+                        drop-shadow(0 0 10px rgba(168, 85, 247, 0.3))
+                        drop-shadow(0 0 20px rgba(168, 85, 247, 0.1));
+            }}
+        }}
 
-    @keyframes rotateGlow {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+        @keyframes rotateGlow {{
+            0% {{ transform: rotate(0deg); }}
+            100% {{ transform: rotate(360deg); }}
+        }}
 
-    .logo-professional {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px 0 16px 0;
-        margin-bottom: 16px;
-        border-bottom: 1px solid rgba(168, 85, 247, 0.15);
-        background: radial-gradient(ellipse at center, 
-                    rgba(168, 85, 247, 0.08) 0%, 
-                    transparent 70%);
-        border-radius: 16px;
-        position: relative;
-        overflow: hidden;
-    }
+        .logo-professional {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0 16px 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+            background: radial-gradient(ellipse at center, 
+                        rgba(168, 85, 247, 0.08) 0%, 
+                        transparent 70%);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }}
 
-    .logo-professional::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle at center, 
-                    rgba(168, 85, 247, 0.05) 0%, 
-                    transparent 50%);
-        animation: rotateGlow 8s linear infinite;
-        pointer-events: none;
-    }
+        .logo-professional::before {{
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, 
+                        rgba(168, 85, 247, 0.05) 0%, 
+                        transparent 50%);
+            animation: rotateGlow 8s linear infinite;
+            pointer-events: none;
+        }}
 
-    .logo-professional img {
-        width: 200px;
-        height: auto;
-        border-radius: 12px;
-        animation: hdrNeonPulse 3s ease-in-out infinite;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        z-index: 2;
-    }
+        .logo-professional img {{
+            width: 200px;
+            height: auto;
+            border-radius: 12px;
+            animation: hdrNeonPulse 3s ease-in-out infinite;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 2;
+        }}
 
-    .logo-professional img:hover {
-        animation: none;
-        filter: brightness(1.3) saturate(1.8)
-                drop-shadow(0 0 40px rgba(168, 85, 247, 0.9))
-                drop-shadow(0 0 80px rgba(168, 85, 247, 0.6))
-                drop-shadow(0 0 120px rgba(168, 85, 247, 0.3))
-                drop-shadow(0 0 200px rgba(168, 85, 247, 0.1));
-        transform: scale(1.06) translateY(-2px);
-    }
+        .logo-professional img:hover {{
+            animation: none;
+            filter: brightness(1.3) saturate(1.8)
+                    drop-shadow(0 0 40px rgba(168, 85, 247, 0.9))
+                    drop-shadow(0 0 80px rgba(168, 85, 247, 0.6))
+                    drop-shadow(0 0 120px rgba(168, 85, 247, 0.3))
+                    drop-shadow(0 0 200px rgba(168, 85, 247, 0.1));
+            transform: scale(1.06) translateY(-2px);
+        }}
 
-    .logo-title {
-        text-align: center;
-        margin-top: 4px;
-        font-size: 18px;
-        font-weight: 700;
-        background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 50%, #a855f7 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: 1px;
-    }
+        .logo-title {{
+            text-align: center;
+            margin-top: 4px;
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }}
 
-    .logo-subtitle {
-        text-align: center;
-        font-size: 11px;
-        color: #8a9ba8;
-        letter-spacing: 2px;
-        margin-top: -4px;
-        text-transform: uppercase;
-    }
-    </style>
+        .logo-subtitle {{
+            text-align: center;
+            font-size: 11px;
+            color: #8a9ba8;
+            letter-spacing: 2px;
+            margin-top: -4px;
+            text-transform: uppercase;
+        }}
+        </style>
 
-    <div class="logo-professional">
-        <img src="logo.png" />
-    </div>
-    <div class="logo-title">Student Analytics</div>
-    <div class="logo-subtitle">POWERED BY AI</div>
-    """, unsafe_allow_html=True)
+        <div class="logo-professional">
+            <img src="data:image/png;base64,{logo_base64}" />
+        </div>
+        <div class="logo-title">Student Analytics</div>
+        <div class="logo-subtitle">POWERED BY AI</div>
+        """, unsafe_allow_html=True)
+    else:
+        # لو الصورة مش موجودة، اعرض نص بديل
+        st.markdown("""
+        <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(168,85,247,0.3); margin-bottom: 16px;">
+            <div style="font-size: 48px;">🎓</div>
+            <div style="font-size: 18px; font-weight: 700; color: #d8b4fe;">Student Analytics</div>
+            <div style="font-size: 11px; color: #8a9ba8; letter-spacing: 2px; text-transform: uppercase;">POWERED BY AI</div>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     st.markdown("## 📊 Navigation")
-
+    
     questions = {
         "Q1": "📈 Attendance Rate per Group",
         "Q2": "📊 Score Distribution by Assessment Type",
@@ -347,15 +372,15 @@ with st.sidebar:
         "Q14": "🚨 Top 10 At-Risk Students",
         "Q15": "📈 Group Grade Trends Over Time"
     }
-
+    
     selected_q = st.radio(
         "Select a question:",
         options=list(questions.keys()),
         format_func=lambda x: f"{x} - {questions[x]}",
         label_visibility="collapsed",
-        index=0  # <--- IMPORTANT: Fixes the NameError
+        index=0
     )
-
+    
     st.markdown("---")
     st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     st.caption("© 2026 Kayfa Analytics")
