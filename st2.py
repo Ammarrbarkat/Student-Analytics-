@@ -13,7 +13,202 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+st.markdown("""
+<style>
 
+/* ===== MAIN BACKGROUND ===== */
+.stApp {
+    background:
+        radial-gradient(circle at top left, #2a1458 0%, transparent 30%),
+        radial-gradient(circle at bottom right, #5b21b6 0%, transparent 25%),
+        linear-gradient(135deg, #09090f 0%, #0f172a 100%);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===== REMOVE DEFAULT STREAMLIT ===== */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* ===== SIDEBAR ===== */
+section[data-testid="stSidebar"] {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(14px);
+    border-right: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Sidebar titles */
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #d8b4fe !important;
+}
+
+/* ===== MAIN TITLES ===== */
+h1 {
+    color: white !important;
+    font-size: 42px !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px;
+}
+
+h2, h3 {
+    color: #d8b4fe !important;
+    font-weight: 700 !important;
+}
+
+/* ===== GLASS CONTAINERS ===== */
+.block-container {
+    padding-top: 2rem;
+}
+
+[data-testid="stMetric"] {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(168,85,247,0.25);
+    backdrop-filter: blur(10px);
+    padding: 18px;
+    border-radius: 18px;
+    box-shadow: 0 0 20px rgba(168,85,247,0.15);
+}
+
+/* ===== BUTTONS ===== */
+.stButton > button {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(168,85,247,0.5);
+}
+
+/* ===== RADIO BUTTONS ===== */
+.stRadio > div {
+    background: rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 14px;
+}
+
+/* ===== SELECT BOX ===== */
+div[data-baseweb="select"] > div {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(168,85,247,0.3) !important;
+    border-radius: 12px !important;
+    color: white !important;
+}
+
+/* ===== DATAFRAME ===== */
+[data-testid="stDataFrame"] {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(168,85,247,0.2);
+}
+
+/* ===== PLOTLY CHARTS ===== */
+.js-plotly-plot {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(168,85,247,0.15);
+    background: rgba(255,255,255,0.02);
+    padding: 10px;
+}
+
+/* ===== CARDS EFFECT ===== */
+div[data-testid="stVerticalBlock"] > div:has(div.js-plotly-plot) {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(168,85,247,0.15);
+    border-radius: 22px;
+    padding: 20px;
+    backdrop-filter: blur(12px);
+    margin-bottom: 20px;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 20px;
+}
+
+/* ===== TEXT ===== */
+p, label, span {
+    color: #e5e7eb !important;
+}
+
+/* ===== HORIZONTAL LINE ===== */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #a855f7, transparent);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(168,85,247,0.2); }
+    50% { box-shadow: 0 0 20px rgba(168,85,247,0.5); }
+    100% { box-shadow: 0 0 5px rgba(168,85,247,0.2); }
+}
+
+.js-plotly-plot:hover {
+    animation: glow 2s infinite;
+}
+
+</style>
+""", unsafe_allow_html=True)
+def style_chart(fig, height=500):
+
+    fig.update_layout(
+        height=height,
+        template="plotly_dark",
+
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+
+        font=dict(
+            color="white",
+            family="Inter"
+        ),
+
+        title_font=dict(
+            size=24
+        ),
+
+        margin=dict(
+            l=20,
+            r=20,
+            t=60,
+            b=20
+        ),
+
+        legend=dict(
+            bgcolor="rgba(0,0,0,0)"
+        )
+    )
+
+    fig.update_xaxes(
+        showgrid=False,
+        zeroline=False
+    )
+
+    fig.update_yaxes(
+        gridcolor="rgba(255,255,255,0.08)",
+        zeroline=False
+    )
+
+    return fig
 @st.cache_resource
 def init_connection():
     uri = "mongodb+srv://amarsayed405_db_user:MezKtw7OuqwdeWw9@cluster0.phnplnc.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=30000&socketTimeoutMS=30000"
@@ -97,18 +292,46 @@ if selected_q == "Q1":
     platform_avg = group_attendance['att_rate'].mean()
     
     fig = px.bar(
-        group_attendance, x='group_id', y='att_rate',
-        color=group_attendance['att_rate'].apply(lambda x: 'Below Average' if x < platform_avg else 'Above Average'),
-        color_discrete_map={'Below Average': '#EF4444', 'Above Average': '#10B981'},
+        group_attendance,
+        x='group_id',
+        y='att_rate',
+        color=group_attendance['att_rate'].apply(
+            lambda x: 'Below Average' if x < platform_avg else 'Above Average'
+        ),
+        color_discrete_map={
+            'Below Average': '#EF4444',
+            'Above Average': '#10B981'
+        },
         title='Attendance Rate per Group',
-        labels={'att_rate': 'Attendance Rate (%)', 'group_id': 'Group'},
+        labels={
+            'att_rate': 'Attendance Rate (%)',
+            'group_id': 'Group'
+        },
         text='att_rate'
     )
-    fig.add_hline(y=platform_avg, line_dash='dash', line_color='navy',
-                   annotation_text=f'Platform Avg: {platform_avg:.1f}%')
-    fig.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
-    fig.update_layout(height=500)
-    
+
+    fig.add_hline(
+        y=platform_avg,
+        line_dash='dash',
+        line_color='#A855F7',
+        annotation_text=f'Platform Avg: {platform_avg:.1f}%'
+    )
+
+    fig.update_traces(
+        texttemplate='%{text:.1f}%',
+        textposition='outside'
+    )
+
+    fig.update_layout(
+        height=500,
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="white"),
+        title_font=dict(size=22),
+        margin=dict(l=20, r=20, t=60, b=20)
+    )
+
     st.plotly_chart(fig, use_container_width=True)
     
 # Q2: Score Distribution by Assessment Type
